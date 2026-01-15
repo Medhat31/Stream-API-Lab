@@ -42,6 +42,14 @@ class City {
 public class StreamAPI{
 	public static void main(String[] args){
 		
+
+	// Finding the highest populated city
+
+		
+	// Finding the most populated country of each continent
+	
+
+	// Finding the highest populated capital city
 	} 
 }
 
