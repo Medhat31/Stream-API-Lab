@@ -141,13 +141,13 @@ public class StreamAPI{
 
 		Country countryObj = new Country();
 		
-		countryObj.setCode(row[0]);
-		countryObj.setName(row[1]);
-		countryObj.setContinent(row[2]);
-		countryObj.setSurfaceArea(Double.parseDouble(row[3]));
-		countryObj.setPopulation(Double.parseDouble(row[4]));
-		countryObj.setGNP(Double.parseDouble(row[5]));
-		countryObj.setCapital(Integer.parseInt(row[6]));
+		countryObj.setCode(row[0].trim());
+		countryObj.setName(row[1].trim());
+		countryObj.setContinent(row[2].trim());
+		countryObj.setSurfaceArea(Double.parseDouble(row[3].trim()));
+		countryObj.setPopulation(Double.parseDouble(row[4].trim()));
+		countryObj.setGNP(Double.parseDouble(row[5].trim()));
+		countryObj.setCapital(Integer.parseInt(row[6].trim()));
 		
 		countriesList.add(countryObj);
 	}
@@ -158,10 +158,10 @@ public class StreamAPI{
 		String row[] = line.split(",");
 
 		City cityObj = new City();
-		cityObj.setID(Integer.parseInt(row[0]));
-		cityObj.setName(row[1]);
-		cityObj.setPopulation(Integer.parseInt(row[2]));
-		cityObj.setCountryCode(row[3]);
+		cityObj.setID(Integer.parseInt(row[0].trim()));
+		cityObj.setName(row[1].trim());
+		cityObj.setPopulation(Integer.parseInt(row[2].trim()));
+		cityObj.setCountryCode(row[3].trim());
 		
 		citiesList.add(cityObj);
 	}
@@ -182,19 +182,22 @@ public class StreamAPI{
 	
 
 	// Finding the highest populated city per country
+	
+	
 	Map<String, Optional<City>> highestPopPerCountry = citiesList.stream()
             .collect(Collectors.groupingBy(
                 City::getCountryCode, 
                 Collectors.maxBy(Comparator.comparingInt(City::getPopulation))
             ));
 
-	System.out.println("Highest Population for each country : ");
+	System.out.println("======================================================\n\tHighest Population for each country\n======================================================");
 
 	highestPopPerCountry.values().forEach(opt -> opt.ifPresent(c -> {
    	System.out.println(c.getCountryCode() + "\t" + c.getName() + "\t" + c.getPopulation());
 	}));
 		
 
+	
 	
 	// Finding the most populated country of each continent
 	Map<String, Optional<Country>> mostPopulatedCountryPerContinent =countriesList.stream()
@@ -203,7 +206,7 @@ public class StreamAPI{
                         Collectors.maxBy(Comparator.comparingDouble(Country::getPopulation))
                 ));
 
-	System.out.println("\nMost populated country of each continent:");
+	System.out.println("\n======================================================\n\tMost populated country of each continent\n======================================================");
 
 	mostPopulatedCountryPerContinent.forEach((continent, countryOpt) ->
         countryOpt.ifPresent(country ->
@@ -214,7 +217,10 @@ public class StreamAPI{
                 )
         )
 );
+	
+	
 	// Finding the highest populated capital city
+	
 	Optional<City> highestPopulatedCapital =countriesList.stream()
                 .map(country ->
                         citiesList.stream()
@@ -225,7 +231,7 @@ public class StreamAPI{
                 .filter(Objects::nonNull)
                 .max(Comparator.comparingInt(City::getPopulation));
 
-	System.out.println("\nHighest populated capital city:");
+System.out.println("\n======================================================\n\tHighest populated capital city\n======================================================");
 
 	highestPopulatedCapital.ifPresent(city ->
         System.out.println(
@@ -234,6 +240,7 @@ public class StreamAPI{
                 city.getPopulation()
         )
 );
+
 
 	} 
 
