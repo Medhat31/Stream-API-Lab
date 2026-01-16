@@ -194,10 +194,47 @@ public class StreamAPI{
    	System.out.println(c.getCountryCode() + "\t" + c.getName() + "\t" + c.getPopulation());
 	}));
 		
-	// Finding the most populated country of each continent
-	
 
+	
+	// Finding the most populated country of each continent
+	Map<String, Optional<Country>> mostPopulatedCountryPerContinent =countriesList.stream()
+                .collect(Collectors.groupingBy(
+                        Country::getContinent,
+                        Collectors.maxBy(Comparator.comparingDouble(Country::getPopulation))
+                ));
+
+	System.out.println("\nMost populated country of each continent:");
+
+	mostPopulatedCountryPerContinent.forEach((continent, countryOpt) ->
+        countryOpt.ifPresent(country ->
+                System.out.println(
+                        continent + "\t" +
+                        country.getName() + "\t" +
+                        country.getPopulation()
+                )
+        )
+);
 	// Finding the highest populated capital city
+	Optional<City> highestPopulatedCapital =countriesList.stream()
+                .map(country ->
+                        citiesList.stream()
+                                .filter(city -> city.getID() == country.getCapital())
+                                .findFirst()
+                                .orElse(null)
+                )
+                .filter(Objects::nonNull)
+                .max(Comparator.comparingInt(City::getPopulation));
+
+	System.out.println("\nHighest populated capital city:");
+
+	highestPopulatedCapital.ifPresent(city ->
+        System.out.println(
+                city.getName() + "\t" +
+                city.getCountryCode() + "\t" +
+                city.getPopulation()
+        )
+);
+
 	} 
 
 }
