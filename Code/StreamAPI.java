@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.*;
 import java.util.stream.*;
 import java.io.*;
 
@@ -181,8 +181,18 @@ public class StreamAPI{
 	*/
 	
 
-	// Finding the highest populated city
+	// Finding the highest populated city per country
+	Map<String, Optional<City>> highestPopPerCountry = citiesList.stream()
+            .collect(Collectors.groupingBy(
+                City::getCountryCode, 
+                Collectors.maxBy(Comparator.comparingInt(City::getPopulation))
+            ));
 
+	System.out.println("Highest Population for each country : ");
+
+	highestPopPerCountry.values().forEach(opt -> opt.ifPresent(c -> {
+   	System.out.println(c.getCountryCode() + "\t" + c.getName() + "\t" + c.getPopulation());
+	}));
 		
 	// Finding the most populated country of each continent
 	
