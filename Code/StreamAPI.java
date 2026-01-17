@@ -193,7 +193,7 @@ public class StreamAPI{
 	System.out.println("======================================================\n\tHighest Population for each country\n======================================================");
 
 	highestPopPerCountry.values().forEach(opt -> opt.ifPresent(c -> {
-   	System.out.println(c.getCountryCode() + "\t" + c.getName() + "\t" + c.getPopulation());
+   	System.out.println(c.getCountryCode() + "\t | \t" + c.getName() + "\t | \t" + c.getPopulation()  + "\n-------------------------------------------------------------------------------");
 	}));
 		
 
@@ -211,9 +211,9 @@ public class StreamAPI{
 	mostPopulatedCountryPerContinent.forEach((continent, countryOpt) ->
         countryOpt.ifPresent(country ->
                 System.out.println(
-                        continent + "\t" +
-                        country.getName() + "\t" +
-                        country.getPopulation()
+                        continent + "\t | \t" +
+                        country.getName() + "\t | \t" +
+                        country.getPopulation() + "\n-------------------------------------------------------------------------------"
                 )
         )
 );
@@ -235,9 +235,9 @@ System.out.println("\n======================================================\n\t
 
 	highestPopulatedCapital.ifPresent(city ->
         System.out.println(
-                city.getName() + "\t" +
-                city.getCountryCode() + "\t" +
-                city.getPopulation()
+                city.getName() + "\t | \t" +
+                city.getCountryCode() + "\t | \t" +
+                city.getPopulation()  + "\n-------------------------------------------------------------------------------"
         )
 );
 
